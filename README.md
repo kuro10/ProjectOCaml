@@ -18,3 +18,11 @@ The base project contains two modules and a main program :
 * `gfile.mli` & `gfile.ml` which define a module `Gfile`
 * `ftest.ml`, the main program 
 
+To generate an image from a dot file, you can use: 
+
+ `dot -Tpng your-dot-file > some-output-file` (if the png format is unrecognized, try svg)
+
+
+
+
+
