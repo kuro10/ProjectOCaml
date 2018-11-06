@@ -10,6 +10,7 @@ type path = string
  *
  *)
 
+(*-------------------------------------------------*)
 let write_file path graph =
 
   (* Open a write-file. *)
@@ -30,6 +31,7 @@ let write_file path graph =
   close_out ff ;
   ()
 
+(*--------------------------------------------------------------------------*)
 (* Reads a line with a node. *)
 let read_node graph line =
   try Scanf.sscanf line "v %s" (fun id -> add_node graph id)
@@ -44,6 +46,8 @@ let read_arc graph line =
     Printf.printf "Cannot read arc in line - %s:\n%s\n" (Printexc.to_string e) line ;
     failwith "from_file"
 
+
+(*--------------------------------------------------------------------------*)
 let from_file path =
 
   let infile = open_in path in
@@ -71,4 +75,25 @@ let from_file path =
   
   close_in infile ;
   final_graph
+
+(*--------------------------------------------------------------------------*)
+let export path graph = 
+  (* Open a write-file. *)
+  let ff = open_out path in
+
+  (* Write in this file. *)
+  fprintf ff "digraph finite_state_machine {\n" ;
+  fprintf ff "  rankdir=LR;\n" ;
+  fprintf ff "  size=\"8,5\"\n" ;
+  fprintf ff "  node [shape = circle];\n";
+
+  (* Write all arcs *)
+  v_iter graph (fun id out -> List.iter (fun (id2, lbl) -> fprintf ff "  %s -> %s [ label = \"%s\" ]; \n" id id2 lbl) out) ;
+
+  fprintf ff "}" ;
   
+  close_out ff ;
+  ()
+
+
+	  
