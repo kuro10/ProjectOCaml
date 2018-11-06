@@ -41,6 +41,9 @@ let v_iter gr f = List.iter (fun (id, out) -> f id out) gr
 
 let v_fold gr f acu = List.fold_left (fun acu (id, out) -> f acu id out) acu gr
 
-let map gr f = failwith "Graph.map: to be implemented by you."
+let map gr f = 
+	let map_arcs outA = List.map (fun (id, x) -> (id,f x) ) outA in
+	List.map (fun (id,al) -> (id, map_arcs al) ) gr
+	  
 
 
