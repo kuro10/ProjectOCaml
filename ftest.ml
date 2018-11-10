@@ -24,7 +24,8 @@ let () =
     Gfile.export outfile graph;
     Printf.printf "Path from %s to %s : %b\n" _source _sink (Ffalgo.exist_path graph _source _sink);
     Printf.printf "List path from %s to %s : \n" _source _sink ; 
-    List.iter (fun p -> Ffalgo.print_path p) (Ffalgo.find_path graph _source _sink);
-    
+    List.iter (fun p -> Ffalgo.print_path p) (Ffalgo.find_path graph _source _sink)
+
+
   in
   ()
