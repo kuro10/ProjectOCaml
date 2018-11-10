@@ -38,8 +38,11 @@ val out_arcs: 'a graph -> id -> 'a out_arcs
 
 (* find_arc gr id1 id2  finds an arc between id1 and id2 and returns its label. Returns None if the arc does not exist. 
 * @raise Graph_error if id1 is unknown. *)
-val find_arc: 'a graph -> id -> id -> 'a option
+val find_arc: 'a graph -> id -> id -> 'a option 
 
+val update_arc : 'a graph -> id -> id -> 'a -> 'a graph
+
+val remove_arc : 'a graph -> id -> id -> 'a graph
 
 (**************  COMBINATORS, ITERATORS  **************)
 

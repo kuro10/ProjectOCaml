@@ -45,5 +45,15 @@ let map gr f =
 	let map_arcs outA = List.map (fun (id, x) -> (id,f x) ) outA in
 	List.map (fun (id,al) -> (id, map_arcs al) ) gr
 	  
+let update_arc gr a b newlabel = 
+  List.map (fun (id1,out) ->  
+                    (id1,List.map (fun (id2,label) -> if id1=a && id2=b 
+                                    then (id2,newlabel) 
+                                    else (id2,label) ) out)
+  ) gr
 
-
+let remove_arc gr a b = 
+  List.map (fun (id1,out) ->  
+                              if id1=a && List.mem_assoc b out then (id1,List.remove_assoc b out) 
+                              else (id1,out)
+  ) gr
