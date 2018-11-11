@@ -35,23 +35,29 @@ let print_path path =
 
 
 let update_graph g path = 
-	let rec update_path g path = 
-		let flot_min = find_flot_min path in
-		match path with
-			| [] -> g
-			| (a,b,label)::tl -> 
-				if int_of_string label = flot_min
-				then remove_arc (update_path g tl) a b
-				else update_arc (update_path g tl) a b (string_of_int (int_of_string label - flot_min)) 
+	let flot_min = find_flot_min path in
+	let rec update_path g path = match path with
+		| [] -> g
+		| (a,b,label)::tl -> 
+			if (int_of_string label) = flot_min
+			then update_path (remove_arc g a b) tl
+			else update_path (update_arc g a b (string_of_int ((int_of_string label) - flot_min)) ) tl
 	in
-	let rec update_rev_path g path = 
-		let flot_min = find_flot_min path in 
-		match path with
-			| [] -> g
-			| (a,b,label)::tl -> 
-				if find_arc g b a = None 
-				then add_arc (update_rev_path g tl) b a label 
-				else update_arc (update_rev_path g tl) b a (string_of_int (int_of_string label +flot_min)) 
-	
+	let rec update_rev_path g path = match path with
+		| [] -> g
+		| (a,b,label)::tl -> 
+			match find_arc g b a with 
+				| None ->  update_rev_path (add_arc g b a (string_of_int flot_min) ) tl 
+				| Some x -> update_rev_path ( update_arc g b a (string_of_int ((int_of_string x) + flot_min)) ) tl
 	in update_rev_path (update_path g path) path
 
+let run_FF_algo g s p =
+	let rec loop g cpt= 
+		if exist_path g s p then 
+			let path = List.hd (find_path g s p) in
+			(*print_path path; *)
+			let newg = update_graph g path in 
+			(*Gfile.export (string_of_int cpt) newg;*)
+			loop newg (cpt+1) 
+		else g 
+	in loop g 0
