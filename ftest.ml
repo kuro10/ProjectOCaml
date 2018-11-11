@@ -21,10 +21,13 @@ let () =
 
   (* Rewrite the graph that has been read. *)
   let () = 
+    (*
     Printf.printf "Path from %s to %s : %b\n" _source _sink (Ffalgo.exist_path graph _source _sink);
     Printf.printf "List path from %s to %s : \n" _source _sink ; 
     List.iter (fun p -> Ffalgo.print_path p) (Ffalgo.find_path graph _source _sink);
-    Gfile.export outfile (Ffalgo.update_graph graph (List.hd (Ffalgo.find_path graph _source _sink)));
+    Gfile.export outfile (Ffalgo.update_graph graph (List.nth  (Ffalgo.find_path graph _source _sink) 6 ));
+    *)
+    Gfile.export outfile (Ffalgo.run_FF_algo graph _source _sink);
 
   in
   ()
