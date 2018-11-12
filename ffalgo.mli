@@ -1,11 +1,23 @@
 open Graph
 
-val exist_path : string graph -> id -> id -> bool 
+(* Type of a path from a node to another node
+ * A path is represented by a list of (id,id,label) *)
+type path = (id * id * int) list    
 
-val find_path : string graph -> id -> id -> (id * id * string) list list 
+(*exist_path g s d :  indicates if a path from source_node to destination_node exists in graph g.
+ *@raise Graphe_error if s (ou d) is unknown in the graph *)
+val exist_path : int graph -> id -> id -> bool 
 
-val print_path : (id * id * string) list -> unit
+(*find path g s d : finds in the graph a list that includes all of paths from soucre_node to destination_node 
+ *@raise Graphe_error if s (ou d) is unknown in the graph *)
+val find_path : int graph -> id -> id -> path
 
-val update_graph : string graph -> (id * id * string) list -> string graph
+(*print_path path  : print this path in terminal*)
+val print_path : path -> unit
 
-val run_FF_algo : string graph -> id -> id -> string graph
+(*update_graph g path : update the graph when having the value flot_min got by a path *)
+val update_graph : int graph -> path -> int graph
+
+(*run_FF_algo g s d : apply the Ford-Fulkerson algorithm for graph g
+ *return a graph with flot max*)
+val run_FF_algo : int graph -> id -> id -> int graph
