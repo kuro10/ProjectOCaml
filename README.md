@@ -1,4 +1,4 @@
-https://en.wikipedia.org/wiki/Maximum_flow_problem# PROJECT : Funtionnal Programming in OCaml
+# PROJECT : Funtionnal Programming in OCaml
 
 This project is done by : [TRAN Trong Hieu](https://github.com/kuro10) & [TRAN Le Minh](https://github.com/tranleminh), a pair of students in 4IR, INSA Toulouse.
 
