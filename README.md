@@ -22,6 +22,13 @@ To generate an image from a dot file, you can use:
 
  `dot -Tpng your-dot-file > some-output-file` (if the png format is unrecognized, try svg)
 
+## Part I : Minimal acceptable project
+
+In this part, we have to understand and implement the Ford-Fulkerson algorithm (in the module `Ffalgo`), then test it on several examples and verify.
+
+## Part II : Medium project
+
+Find a use-case of this algorithm and writes a program that solves the problem. (reference : [max flow page](https://en.wikipedia.org/wiki/Maximum_flow_problem)  
 
 
 
