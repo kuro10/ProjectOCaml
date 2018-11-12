@@ -46,14 +46,13 @@ let map gr f =
 	List.map (fun (id,al) -> (id, map_arcs al) ) gr
 	  
 let update_arc gr a b newlabel = 
-  List.map (fun (id1,out) ->  
+ 	List.map (fun (id1,out) ->  
                     (id1,List.map (fun (id2,label) -> if id1=a && id2=b 
                                     then (id2,newlabel) 
-                                    else (id2,label) ) out)
-  ) gr
+                                    else (id2,label) ) out)) gr
 
-let remove_arc gr a b = 
-  List.map (fun (id1,out) ->  
+let remove_arc gr a b = match find_arc gr a b with 
+	| None -> raise (Graph_error ("Arc from " ^ a ^ "to" ^ b ^ " does not exist in the graph."))
+	| Some _ -> List.map (fun (id1,out) ->  
                               if id1=a && List.mem_assoc b out then (id1,List.remove_assoc b out) 
-                              else (id1,out)
-  ) gr
+                              else (id1,out)) gr

@@ -40,8 +40,13 @@ val out_arcs: 'a graph -> id -> 'a out_arcs
 * @raise Graph_error if id1 is unknown. *)
 val find_arc: 'a graph -> id -> id -> 'a option 
 
+(*update_arc gr a b newlabel :  change the label of the arc from a to b by the new value 'newlabel'
+ *if the arc already exists
+ *else return the init graph *)
 val update_arc : 'a graph -> id -> id -> 'a -> 'a graph
 
+(*remove_arc gr a b : remove if the arc already exists 
+ * @raise Graph_error if the arc does not exist in the graph *)
 val remove_arc : 'a graph -> id -> id -> 'a graph
 
 (**************  COMBINATORS, ITERATORS  **************)
