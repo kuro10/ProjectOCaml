@@ -28,7 +28,7 @@ In this part, we have to understand and implement the Ford-Fulkerson algorithm (
 
 ## Part II : Medium project
 
-Find a use-case of this algorithm and writes a program that solves the problem. (reference : [max flow page](https://en.wikipedia.org/wiki/Maximum_flow_problem)).
+Find a use-case of this algorithm and writes a program that solves the problem (reference : [max flow page](https://en.wikipedia.org/wiki/Maximum_flow_problem)).
 
 
 
