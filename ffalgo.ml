@@ -73,7 +73,7 @@ let find_path g s d =
 			| a :: tl -> tl 
 
 (*-----------------------------------------------------------------------
-This function return the value of flot_min from path, this value is used to update the graph
+This function returns the value of flot_min from path, this value is used to update the graph
 ------------------------------------------------------------------------*)
 let find_flot_min path = List.fold_left (fun min (_,_,label) -> if label < min then label else min) 10000 path 
 
