@@ -118,7 +118,7 @@ Return a graph with flot max
 ------------------------------------------------------------------------*)
 let run_FF_algo g s p =
 	(*While it exists a path from s to p, continue algo 
-	 *cpt is used to compte the number of loop *)
+	 *cpt is used to count the number of loop *)
 	let rec loop g cpt= 
 		if exist_path g s p then 
 			(*find a path and its flot min*)
