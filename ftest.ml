@@ -26,9 +26,9 @@ let () =
   	Printf.printf "List path from %s to %s : \n" _source _sink ; 
   	Ffalgo.print_path (Ffalgo.find_path igraph _source _sink);
   	
-	 (*List.iter (fun p -> Ffalgo.print_path p) (Ffalgo.find_path igraph _source _sink);*)
+	  (*List.iter (fun p -> Ffalgo.print_path p) (Ffalgo.find_path igraph _source _sink);*)
 	    
-	 (*Gfile.export outfile (Ffalgo.update_graph graph (List.nth  (Ffalgo.find_path igraph _source _sink) 6 ));*)
+	  (*Gfile.export outfile (Ffalgo.update_graph graph (List.nth  (Ffalgo.find_path igraph _source _sink) 6 ));*)
     
     Gfile.export outfile (map (Ffalgo.run_FF_algo igraph _source _sink) string_of_int );
 

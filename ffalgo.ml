@@ -38,7 +38,6 @@ let rec list_path g from_a marked b= match from_a with
 			List.concat ( List.map (fun (id,label) -> list_path g ( (y,id,label)::from_a) newmarked b ) n)
 *)
 
-
 (*This function finds only a path if it exits*)
 let rec a_path g from_a marked b= match from_a with
 	| [] -> assert false 

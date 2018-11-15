@@ -1,5 +1,6 @@
 open Graph
 
+
 (* Type of a path from a node to another node
  * A path is represented by a list of (id,id,label) *)
 type path = (id * id * int) list    
