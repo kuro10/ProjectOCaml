@@ -31,7 +31,7 @@ This function finds a path from s to d in graph g, return an empty list if it do
 let rec list_path g from_a marked b= match from_a with
 	| [] -> assert false
 	| (x,y,l)::tl -> 
-		if y=b then from_a 
+		if y=b then [from_a] 
 		else	
 			let newmarked = y :: marked in
 			let n = List.filter (fun (id,_) -> not (List.mem id newmarked) ) (out_arcs g y) in
