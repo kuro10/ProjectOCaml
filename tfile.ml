@@ -1,7 +1,7 @@
 open Graph 
 open Printf 
 
-type path = sting
+type path = string
 
 (* Input text file's format : 
  * 
@@ -17,7 +17,28 @@ type path = sting
  
 (*------------------------------------------------------------*)
 (*let check_exist node file --> A function that checks if a node under format "v %s" has already existed *) 
+ let check_exist node file = 
  
+   let rec loop res = 
+     try 
+	   let line = input_line file in
+	   let aux = match line.[0] with 
+		 | 'v' -> ((get_node line) = node) || res 
+		 | _ -> false
+	   in loop aux
+     with End_of_file -> res
+	in
+	
+	let result = loop false in
+	
+	result
+(*-------------------------------------------------------------*)
+let get_node line = 
+  try Scanf.sscanf line "v %s" (fun id -> id)
+  with e ->
+    Printf.printf "Cannot read line - %s:\n%s\n" (Printexc.to_string e) line ;
+    failwith "from_file"
+	
 (*-------------------------------------------------------------*)
 let get_source_flow id line = 
   try Scanf.sscanf line "C %s %s \"%s@\" \"%s@\"" (fun id1 id2 label1 label2 -> if id = id1 then ios label1 else 0)
@@ -47,9 +68,9 @@ let cap_calcul infile node =
     with End_of_file -> res
   in
 
-  let resultat = loop 0 in
+  let result = loop 0 in
   
-  resultat
+  result
 	
 (*-------------------------------------------------------------*)
 let read_source infile line outfile =
@@ -78,8 +99,8 @@ let read_destination infile line outfile =
 (*-------------------------------------------------------------*)
 let read_transport outfile line =
   try Scanf.sscanf line "C %s %s \"%s@\" \"%s@\"" (fun id1 id2 label1 label2 -> 
-  fprintf outfile "v %s\n" id1;
-  fprintf outfile "v %s\n" id2;
+  if not (check_exist id1 outfile) then fprintf outfile "v %s\n" id1;
+  if not (check_exist id2 outfile) then fprintf outfile "v %s\n" id2;
   fprintf outfile "e \"%s\" %s %s" label1 id1 id2;
   if ios label1 < ios label2 then fprintf outfile "e \"%s\" %s %s" (soi((ios label1) - (ios label2))) id2 id1) 
   with e ->
