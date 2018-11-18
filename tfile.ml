@@ -15,6 +15,13 @@ type path = string
  
  let ios = int_of_string
  
+(*-------------------------------------------------------------*)
+let get_node line = 
+  try Scanf.sscanf line "v %s" (fun id -> id)
+  with e ->
+    Printf.printf "Cannot read line - %s:\n%s\n" (Printexc.to_string e) line ;
+    failwith "from_file"
+	
 (*------------------------------------------------------------*)
 (*let check_exist node file --> A function that checks if a node under format "v %s" has already existed *) 
  let check_exist node file = 
@@ -32,13 +39,7 @@ type path = string
 	let result = loop false in
 	
 	result
-(*-------------------------------------------------------------*)
-let get_node line = 
-  try Scanf.sscanf line "v %s" (fun id -> id)
-  with e ->
-    Printf.printf "Cannot read line - %s:\n%s\n" (Printexc.to_string e) line ;
-    failwith "from_file"
-	
+
 (*-------------------------------------------------------------*)
 let get_source_flow id line = 
   try Scanf.sscanf line "C %s %s \"%s@\" \"%s@\"" (fun id1 id2 label1 label2 -> if id = id1 then ios label1 else 0)
