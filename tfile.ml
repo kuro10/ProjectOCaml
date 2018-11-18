@@ -100,8 +100,8 @@ let read_destination infile line outfile =
 (*-------------------------------------------------------------*)
 let read_transport outfile line =
   try Scanf.sscanf line "C %s %s \"%s@\" \"%s@\"" (fun id1 id2 label1 label2 -> 
-  if not (check_exist id1 outfile) then fprintf outfile "v %s\n" id1;
-  if not (check_exist id2 outfile) then fprintf outfile "v %s\n" id2;
+  (*if not (check_exist id1 outfile) then*) fprintf outfile "v %s\n" id1;
+  (*if not (check_exist id2 outfile) then*) fprintf outfile "v %s\n" id2;
   fprintf outfile "e \"%s\" %s %s" label1 id1 id2;
   if ios label1 < ios label2 then fprintf outfile "e \"%s\" %s %s" (soi((ios label1) - (ios label2))) id2 id1) 
   with e ->
