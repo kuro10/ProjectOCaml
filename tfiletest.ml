@@ -13,9 +13,6 @@ let () =
   
   in
 
-  (* Open file *)
-  let graph = Gfile.from_file infile in
-  let igraph = map graph int_of_string in 
   (* Rewrite the graph that has been read. *)
   let () = 
     
