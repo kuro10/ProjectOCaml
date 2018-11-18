@@ -16,13 +16,7 @@ type path = sting
  let ios = int_of_string
  
 (*------------------------------------------------------------*)
-(*let check_exist node file* --> A function that checks if a node under format "v %s" has already existed *) 
-(*------------------------------------------------------------*)
-let read_source outfile line =
-  try Scanf.sscanf line "S %s" (fun id -> fprintf outfile "v %s\n" id)
-  with e ->
-    Printf.printf "Cannot read node in line - %s:\n%s\n" (Printexc.to_string e) line ;
-    failwith "from_file"
+(*let check_exist node file --> A function that checks if a node under format "v %s" has already existed *) 
  
 (*-------------------------------------------------------------*)
 let get_source_flow id line = 
