@@ -97,8 +97,8 @@ let export path graph =
 
 (*--------------------------------------------------------------------------*)
 
-(*val mapType : string * string -> int * int *)
-let mapType = fun (a,b) -> (int_of_string a, int_of_string b)
+(*val sToi : string * string -> int * int *)
+let sToi = fun (a,b) -> (int_of_string a, int_of_string b)
 
-(*val rmapType : int * int -> string * string*)
-let rmapType = fun (a,b) -> (string_of_int a, string_of_int b)
+(*val iTos : int * int -> string * string*)
+let iTos = fun (a,b) -> (string_of_int a, string_of_int b)

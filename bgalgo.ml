@@ -38,31 +38,7 @@ let rec list_path g from_a marked b= match from_a with
 			let n = List.filter (fun (id,_) -> not (List.mem id newmarked) ) (out_arcs g y) in
 			List.concat ( List.map (fun (id,l) -> list_path g ( (y,id,l)::from_a) newmarked b ) n)
 
-
-(*This function finds only a path if it exits*)
-(*
-let rec a_path g from_a marked b= match from_a with
-	| [] -> assert false 
-	| (x,y,(f,c))::tl -> 
-		(*if the path from_a already reached at b -> ok*)
-		if y=b then from_a 
-		else	
-			(* otherwise, mark y*)
-			let newmarked = y :: marked in
-			(*check all of out_arcs from y and choose all the nodes which are not marked*)
-			let n = List.filter (fun (id,_) -> not (List.mem id newmarked) ) (out_arcs g y) in
-			(*find from these nodes a path to b
-			 *if a path exists, return it 
-			 *else check the next node *)			
-			let rec loop l = match l with 
-				| [] -> []
-				| (id,(f,c)) :: tl -> 
-					match a_path g ( (y,id,(f,c))::from_a) newmarked b with   
-						| [] -> loop tl 
-						| path -> path  
-			in loop n		
-*)
-
+(*This function returns the cost of a path*)
 let find_cost path = List.fold_left (fun acu (_,_,(_,cost)) -> acu + cost) 0 path
 
 (*This function returns a correct ordre path from a to b which having the min cost*)
