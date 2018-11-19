@@ -12,6 +12,6 @@ val write_file: path -> (string * string) graph -> unit
 (* This function writes a graph in dot format*)
 val export : path -> (string * string) graph -> unit
 
-val mapType : string * string -> int * int 
+val sToi : string * string -> int * int 
 
-val rmapType : int * int -> string * string
+val iTos : int * int -> string * string

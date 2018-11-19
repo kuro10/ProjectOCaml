@@ -19,7 +19,7 @@ let () =
 
   (* Open file *)
   let cgraph = GCostfile.from_file infile in 
-  let icgraph = map cgraph GCostfile.mapType in
+  let icgraph = map cgraph GCostfile.sToi in
   (* Rewrite the graph that has been read. *)
   let () = 
     (*
@@ -28,7 +28,7 @@ let () =
   	Bgalgo.print_path (Bgalgo.find_path_mincost icgraph _source _sink);
 	*) 
 	GCostfile.export outfile cgraph;
-    GCostfile.export resfile (map (Bgalgo.run_BG_algo icgraph _source _sink) GCostfile.rmapType);
+    GCostfile.export resfile (map (Bgalgo.run_BG_algo icgraph _source _sink) GCostfile.iTos);
     
 
   in
