@@ -19,7 +19,7 @@ type path = string
 let get_node line = 
   try Scanf.sscanf line "v %s" (fun id -> id)
   with e ->
-    Printf.printf "Cannot read line - %s:\n%s\n" (Printexc.to_string e) line ;
+    Printf.printf "Cannot read node line - %s:\n%s\n" (Printexc.to_string e) line ;
     failwith "from_file"
 	
 (*------------------------------------------------------------*)
@@ -44,14 +44,14 @@ let get_node line =
 let get_source_flow id line = 
   try Scanf.sscanf line "C %s %s \"%s@\" \"%s@\"" (fun id1 id2 label1 label2 -> if id = id1 then ios label1 else 0)
   with e ->
-    Printf.printf "Cannot read line - %s:\n%s\n" (Printexc.to_string e) line ;
+    Printf.printf "Cannot read source flow line - %s:\n%s\n" (Printexc.to_string e) line ;
     failwith "from_file"
 	
 (*-------------------------------------------------------------*)
 let get_destination_flow id line = 
-  try Scanf.sscanf line "D %s %s \"%s@\" \"%s@\"" (fun id1 id2 label1 label2 -> if id = id2 then ios label1 else 0)
+  try Scanf.sscanf line "C %s %s \"%s@\" \"%s@\"" (fun id1 id2 label1 label2 -> if id = id2 then ios label1 else 0)
   with e ->
-    Printf.printf "Cannot read line - %s:\n%s\n" (Printexc.to_string e) line ;
+    Printf.printf "Cannot read destination flow line - %s:\n%s\n" (Printexc.to_string e) line ;
     failwith "from_file"
 	
 (*-------------------------------------------------------------*)
@@ -61,7 +61,7 @@ let cap_calcul infile node =
     try 
 	  let line = input_line infile in
 	  let aux = match line.[0] with 
-		| 'C' -> res + (get_source_flow node line) 
+		| 'S' -> res + (get_source_flow node line) 
 		| 'D' -> res + (get_destination_flow node line) 
 		| _ -> res 
 	  in 
@@ -76,32 +76,32 @@ let cap_calcul infile node =
 (*-------------------------------------------------------------*)
 let read_source infile line outfile =
   try Scanf.sscanf line "S %s \"%s@\"" (fun id label ->
+  fprintf outfile "v %s\n" id;
   let cap = cap_calcul infile id in
   let aux = if cap = (ios label) then fprintf outfile "e \"%s\" %s S\n" label id
-  else fprintf outfile "e \"%s\" S %s\n" id (soi cap); fprintf outfile "e \"%s\" %s S\n" id (soi ((ios label) - cap))
+  else (fprintf outfile "e \"%s\" S %s\n" id (soi cap); fprintf outfile "e \"%s\" %s S\n" id (soi ((ios label) - cap)))
   in 
   aux)
   with e ->
-    Printf.printf "Cannot read line - %s:\n%s\n" (Printexc.to_string e) line ;
+    Printf.printf "Cannot read source line - %s:\n%s\n" (Printexc.to_string e) line ;
     failwith "from_file"  
 	
 (*-------------------------------------------------------------*)
 let read_destination infile line outfile =
   try Scanf.sscanf line "D %s \"%s@\"" (fun id label ->
+  fprintf outfile "v %s\n" id;
   let cap = cap_calcul infile id in
   let aux = if cap = (ios label) then fprintf outfile "e \"%s\" D %s\n" label id
-  else fprintf outfile "e \"%s\" %s D\n" id (soi cap); fprintf outfile "e \"%s\" D %s\n" id (soi ((ios label) - cap))
+  else (fprintf outfile "e \"%s\" %s D\n" id (soi cap); fprintf outfile "e \"%s\" D %s\n" id (soi ((ios label) - cap)))
   in 
   aux)
   with e ->
-    Printf.printf "Cannot read line - %s:\n%s\n" (Printexc.to_string e) line ;
+    Printf.printf "Cannot read destination line - %s:\n%s\n" (Printexc.to_string e) line ;
     failwith "from_file"  
  
 (*-------------------------------------------------------------*)
 let read_transport outfile line =
-  try Scanf.sscanf line "C %s %s \"%s@\" \"%s@\"" (fun id1 id2 label1 label2 -> 
-  (*if not (check_exist id1 outfile) then*) fprintf outfile "v %s\n" id1;
-  (*if not (check_exist id2 outfile) then*) fprintf outfile "v %s\n" id2;
+  try Scanf.sscanf line "C %s %s \"%s@\" \"%s@\"" (fun id1 id2 label1 label2 ->
   fprintf outfile "e \"%s\" %s %s" label1 id1 id2;
   if ios label1 < ios label2 then fprintf outfile "e \"%s\" %s %s" (soi((ios label1) - (ios label2))) id2 id1) 
   with e ->
@@ -120,10 +120,11 @@ let create_file path1 path2 =
   fprintf outfile "v D\n";
   
   (* Read all lines until end of file. *)
-  let rec loop aux =
+  let rec loop () =
     try
       let line = input_line infile in
-      let aux =
+	  printf "[%s]\n%!" line;
+      let () =
         (* Ignore empty lines *)
         if line = "" then ()
 
@@ -135,10 +136,10 @@ let create_file path1 path2 =
           | 'C' -> read_transport outfile line
           | _ -> ()
       in                 
-      loop aux        
+      loop ()        
     with End_of_file -> ()
   in
-
+  loop ();
   close_in infile ;
   close_out outfile ;
   ()
