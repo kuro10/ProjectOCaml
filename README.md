@@ -32,7 +32,7 @@ Find a use-case of this algorithm and writes a program that solves the problem (
 In order to use module Tfile, user has to create an input file with the imposed format and precise the following elements :
 - Source point with its supply capacity. By example, a source named "a" with supply capacity "25" is presented as : S a "25" 
 - Destination point with its demand capacity. By example, a destination named "d" with demand capcity "30" is presented as : D d "30"
-- Transport roads between points, as well as its actual flow and its maximal capacity. By example, if user is expecting to transport "10 products" in a transport road between "a" and "d" with a maximal capacity of "20 products", it is presented as : C a d "10" "20" 
+- Transport roads between points, as well as its maximal capacity. By example, if user is expecting a transport road between "a" and "d" with a maximal capacity of "20 products", it is presented as : C a d "20" 
 ## Part III : Better project
 
 Enhance the medium project by taking into account other constraints - and implementing the max-flow min-cost algorithm.
