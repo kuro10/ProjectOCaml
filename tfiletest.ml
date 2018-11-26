@@ -8,8 +8,8 @@ let () =
       exit 0
     end ;
 
-  let infile = open_in(Sys.argv.(1))
-  and outfile = open_out(Sys.argv.(2))
+  let infile = open_in Sys.argv.(1)
+  and outfile = open_out Sys.argv.(2) 
   
   in
   create_file infile graphfile;
