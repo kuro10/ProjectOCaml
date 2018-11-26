@@ -19,9 +19,9 @@ let () =
   (* Rewrite the graph that has been read. *)
   let () = 
     
-  	Printf.printf "List path from %s to %s : \n" _source _sink ; 
-  	Ffalgo.print_path (Ffalgo.find_path igraph _source _sink);
-    Gfile.export outfile (map (Ffalgo.run_FF_algo igraph _source _sink) string_of_int );
+  	Printf.printf "List path from %s to %s : \n" "S" "D" ; 
+  	Ffalgo.print_path (Ffalgo.find_path igraph "S" "D");
+    Gfile.export outfile (map (Ffalgo.run_FF_algo igraph "S" "D") string_of_int );
 	
   in
   ()
