@@ -38,11 +38,7 @@ let read_transport line outfile =
     failwith "from_file"
 	
 (*-------------------------------------------------------------*)	
-let create_file path1 path2 =
-
-  let infile = open_in path1 in
-  
-  let outfile = open_out path2 in
+let create_file infile outfile =
 
   (* Create 2 points : Source and Destination*)
   fprintf outfile "v S\n";
@@ -69,6 +65,4 @@ let create_file path1 path2 =
     with End_of_file -> ()
   in
   loop ();
-  close_in infile ;
-  close_out outfile ;
   ()
