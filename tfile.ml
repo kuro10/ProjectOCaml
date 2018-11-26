@@ -66,3 +66,21 @@ let create_file infile outfile =
   in
   loop ();
   ()
+(*-------------------------------------------------------------*)	
+let export path graph = 
+  (* Open a write-file. *)
+  let ff = open_out path in
+
+  (* Write in this file. *)
+  fprintf ff "digraph finite_state_machine {\n" ;
+  fprintf ff "  rankdir=LR;\n" ;
+  fprintf ff "  size=\"8,5\"\n" ;
+  fprintf ff "  node [shape = circle];\n";
+
+  (* Write all arcs *)
+  v_iter graph (fun id out -> if id <> "S" then List.iter (fun (id2, lbl) -> if id2 <> "D" then fprintf ff "  %s -> %s [ label = \"%s\" ]; \n" id id2 lbl) out) ;
+
+  fprintf ff "}" ;
+  
+  close_out ff ;
+  ()

@@ -8,8 +8,7 @@ let () =
       exit 0
     end ;
 
-  let infile = open_in Sys.argv.(1)
-  and outfile = open_out Sys.argv.(2) 
+  let infile = open_in (Sys.argv.(1))
   
   in
   create_file infile graphfile;
@@ -21,7 +20,7 @@ let () =
     
   	Printf.printf "List path from %s to %s : \n" "S" "D" ; 
   	Ffalgo.print_path (Ffalgo.find_path igraph "S" "D");
-    Gfile.export outfile (map (Ffalgo.run_FF_algo igraph "S" "D") string_of_int );
+    export outfile (map (Ffalgo.run_FF_algo igraph "S" "D") string_of_int );
 	
   in
   ()
