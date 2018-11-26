@@ -12,11 +12,16 @@ let () =
   and outfile = open_out(Sys.argv.(2))
   
   in
+  create_file infile graphfile;
+  let graph = Gfile.from_file graphfile in
+  let igraph = map graph int_of_string in 
 
   (* Rewrite the graph that has been read. *)
   let () = 
     
-	create_file infile outfile
-
+  	Printf.printf "List path from %s to %s : \n" _source _sink ; 
+  	Ffalgo.print_path (Ffalgo.find_path igraph _source _sink);
+    Gfile.export outfile (map (Ffalgo.run_FF_algo igraph _source _sink) string_of_int );
+	
   in
   ()
