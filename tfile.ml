@@ -15,7 +15,7 @@ type path = string
 let read_source line outfile =
   try Scanf.sscanf line "S %s \"%s@\"" (fun id label ->
   fprintf outfile "v %s\n" id;
-  fprintf outfile "e \"%s\" S %s\n" label id;)
+  fprintf outfile "e \"%s\" S %s\n" label id)
   with e ->
     Printf.printf "Cannot read source line - %s:\n%s\n" (Printexc.to_string e) line ;
     failwith "read_source"  
