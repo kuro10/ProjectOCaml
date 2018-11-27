@@ -72,18 +72,18 @@ let find_path g s d =
 			| a :: tl -> tl 
 
 (*-----------------------------------------------------------------------
-This function returns the value of flot_min from path, this value is used to update the graph
+This function returns the value of flow_min from path, this value is used to update the graph
 ------------------------------------------------------------------------*)
-let find_flot_min path = List.fold_left (fun min (_,_,label) -> if label < min then label else min) 10000 path 
+let find_flow_min path = List.fold_left (fun min (_,_,label) -> if label < min then label else min) 10000 path 
 
 (*-----------------------------------------------------------------------
 val print_path : (id * id * int) list -> unit
-This function prints the path, helps to check the results (path,flot_min)
+This function prints the path, helps to check the results (path,flow_min)
 ------------------------------------------------------------------------*)
 let print_path path = 
 	Printf.printf "{ ";
 	List.iter (fun (id1,id2,label) -> Printf.printf "[%s,%s,%d] " id1 id2 label) (path);
-	Printf.printf " -> min flot = %d" (find_flot_min path);
+	Printf.printf " -> min flow = %d" (find_flow_min path);
 	Printf.printf " }\n"
 
 (*-----------------------------------------------------------------------
@@ -91,41 +91,48 @@ val update_graph : int graph -> (id * id * int) list -> int graph
 This function is used to update the graph by given a path
 ------------------------------------------------------------------------*)
 let update_graph g path = 
-	(* First, we have the flot_min that can be added*)
-	let flot_min = find_flot_min path in
-	(* Then, we update all the values on this path,by increasing the flot (or decreasing the capacity) of these arcs*)
+	(* First, we have the flow_min that can be added*)
+	let flow_min = find_flow_min path in
+	(* Then, we update all the values on this path,by increasing the flow (or decreasing the capacity) of these arcs*)
 	let rec update_path g path = match path with
 		| [] -> g
 		| (a,b,label)::tl -> 
-			if label = flot_min
-			then update_path (remove_arc g a b) tl  (*if the flot of an arc is zero, remove it *) 
-			else update_path (update_arc g a b (label - flot_min) ) tl (*otherwise, dercrease it*)	
+			if label = flow_min
+			then update_path (remove_arc g a b) tl  (*if the flow of an arc is zero, remove it *) 
+			else update_path (update_arc g a b (label - flow_min) ) tl (*otherwise, dercrease it*)	
 	(* Finally, we update all the reverse arcs from this path*)	
 	in 
 	let rec update_rev_path g path = match path with
 		| [] -> g
 		| (a,b,label)::tl -> 
 			match find_arc g b a with 
-				| None ->  update_rev_path (add_arc g b a flot_min ) tl  (*if this arc does not exists, we add it into the graph *)
-				| Some x -> update_rev_path ( update_arc g b a (x + flot_min) ) tl (*if it already exists, increase this value by adding flot_min  *)
+				| None ->  update_rev_path (add_arc g b a flow_min ) tl  (*if this arc does not exists, we add it into the graph *)
+				| Some x -> update_rev_path ( update_arc g b a (x + flow_min) ) tl (*if it already exists, increase this value by adding flow_min  *)
 	in update_rev_path (update_path g path) path
 
 (*-----------------------------------------------------------------------
 val run_FF_algo : int graph -> id -> id -> int graph
 This function helps to apply the Ford-Fulkerson algorithm on the given graph
-Return a graph with flot max
+Return a graph with flow max
 ------------------------------------------------------------------------*)
 let run_FF_algo g s p =
 	(*While it exists a path from s to p, continue algo 
 	 *cpt is used to count the number of loop *)
-	let rec loop g cpt= 
+	let rec loop g cpt debit = 
 		if exist_path g s p then 
-			(*find a path and its flot min*)
+			(*find a path and its flow min*)
 			let path = find_path g s p in
+			let flow_min = find_flow_min path in 
+			let newdebit =  debit + flow_min in
 			(*print_path path; *)
 			(*update the graph with this path *)
 			let newg = update_graph g path in 
 			(*Gfile.export (string_of_int cpt) newg;*)
-			loop newg (cpt+1) 
-		else g 
-	in loop g 0
+			loop newg (cpt+1) newdebit  
+		else (g,debit) 
+	in let (result,maxdebit) = loop g 0 0 in 
+	begin
+		Printf.printf "Result : max debit = %d\n" maxdebit;
+		result 
+	end
+
