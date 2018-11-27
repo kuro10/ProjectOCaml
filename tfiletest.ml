@@ -1,26 +1,26 @@
-open Tfile
+open Graph
 
 let () =
 
-  if Array.length Sys.argv <> 3 then
+  if Array.length Sys.argv <> 4 then
     begin
-      Printf.printf "\nUsage: %s infile outfile\n\n%!" Sys.argv.(0) ;
+      Printf.printf "\nUsage: %s infile outfile graphfile\n\n%!" Sys.argv.(0) ;
       exit 0
     end ;
 
-  let infile = open_in (Sys.argv.(1))
+  let infile = Sys.argv.(1) 
+  and outfile = Sys.argv.(2)
+  and graphfile = Sys.argv.(3)
   
   in
-  create_file infile graphfile;
+  Tfile.create_file infile graphfile;
   let graph = Gfile.from_file graphfile in
-  let igraph = map graph int_of_string in 
+  let igraph = map graph int_of_string in
 
   (* Rewrite the graph that has been read. *)
   let () = 
-    
-  	Printf.printf "List path from %s to %s : \n" "S" "D" ; 
-  	Ffalgo.print_path (Ffalgo.find_path igraph "S" "D");
-    export outfile (map (Ffalgo.run_FF_algo igraph "S" "D") string_of_int );
+    Gfile.export graphfile graph; 
+   	Tfile.export outfile (map (Ffalgo.run_FF_algo igraph "S" "D") string_of_int );
 	
   in
   ()

@@ -32,23 +32,25 @@ let read_destination line outfile =
 (*-------------------------------------------------------------*)
 let read_transport line outfile =
   try Scanf.sscanf line "C %s %s \"%s@\"" (fun id1 id2 label ->
-  fprintf outfile "e \"%s\" %s %s" label id1 id2;)
+  fprintf outfile "e \"%s\" %s %s\n" label id1 id2;)
   with e ->
     Printf.printf "Cannot read line - %s:\n%s\n" (Printexc.to_string e) line ;
-    failwith "from_file"
+    failwith "read_transport"
 	
 (*-------------------------------------------------------------*)	
 let create_file infile outfile =
 
+  let fx = open_in infile in
+  let ff = open_out outfile in
+
   (* Create 2 points : Source and Destination*)
-  fprintf outfile "v S\n";
-  fprintf outfile "v D\n";
+  fprintf ff "v S\n";
+  fprintf ff "v D\n";
   
   (* Read all lines until end of file. *)
   let rec loop () =
     try
-      let line = input_line infile in
-	  printf "[%s]\n%!" line;
+      let line = input_line fx in
       let () =
         (* Ignore empty lines *)
         if line = "" then ()
@@ -56,15 +58,17 @@ let create_file infile outfile =
         (* The first character of a line determines its content : S, D or C.
          * Else it will be ignored *)
         else match line.[0] with
-          | 'S' -> read_source line outfile
-          | 'D' -> read_destination line outfile
-          | 'C' -> read_transport line outfile 
+          | 'S' -> read_source line ff
+          | 'D' -> read_destination line ff
+          | 'C' -> read_transport line ff 
           | _ -> ()
       in                 
       loop ()        
     with End_of_file -> ()
   in
   loop ();
+  close_out ff;
+  close_in fx;
   ()
 (*-------------------------------------------------------------*)	
 let export path graph = 
@@ -78,7 +82,7 @@ let export path graph =
   fprintf ff "  node [shape = circle];\n";
 
   (* Write all arcs *)
-  v_iter graph (fun id out -> if id <> "S" then List.iter (fun (id2, lbl) -> if id2 <> "D" then fprintf ff "  %s -> %s [ label = \"%s\" ]; \n" id id2 lbl) out) ;
+  v_iter graph (fun id out -> if (id <> "S" && id <> "D") then List.iter (fun (id2, lbl) -> if (id2 <> "D" && id2 <> "S") then fprintf ff "  %s -> %s [ label = \"%s\" ]; \n" id id2 lbl) out) ;
 
   fprintf ff "}" ;
   
