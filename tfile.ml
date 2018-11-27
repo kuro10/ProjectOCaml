@@ -18,7 +18,7 @@ let read_source line outfile =
   fprintf outfile "e \"%s\" S %s\n" label id;)
   with e ->
     Printf.printf "Cannot read source line - %s:\n%s\n" (Printexc.to_string e) line ;
-    failwith "from_file"  
+    failwith "read_source"  
 	
 (*-------------------------------------------------------------*)
 let read_destination line outfile =
@@ -27,7 +27,7 @@ let read_destination line outfile =
   fprintf outfile "e \"%s\" %s D\n" label id;)
   with e ->
     Printf.printf "Cannot read destination line - %s:\n%s\n" (Printexc.to_string e) line ;
-    failwith "from_file"  
+    failwith "read_destination"  
  
 (*-------------------------------------------------------------*)
 let read_transport line outfile =
