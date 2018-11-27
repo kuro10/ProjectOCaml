@@ -19,7 +19,7 @@ let () =
 
   (* Rewrite the graph that has been read. *)
   let () = 
-    Gfile.export graphfile graph; 
+    Tfile.export graphfile graph; 
    	Tfile.export outfile (map (Ffalgo.run_FF_algo igraph "S" "D") string_of_int );
 	
   in
