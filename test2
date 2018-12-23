@@ -2,14 +2,12 @@ digraph finite_state_machine {
   rankdir=LR;
   size="8,5"
   node [shape = circle];
-  4 -> 3 [ label = "(10,-2)" ]; 
-  4 -> 2 [ label = "(10,-4)" ]; 
-  3 -> 2 [ label = "(15,-5)" ]; 
-  3 -> 1 [ label = "(20,-6)" ]; 
-  3 -> 4 [ label = "(10,2)" ]; 
-  5 -> 4 [ label = "(20,-1)" ]; 
-  5 -> 3 [ label = "(25,-2)" ]; 
-  2 -> 1 [ label = "(25,-7)" ]; 
-  2 -> 3 [ label = "(10,5)" ]; 
-  1 -> 2 [ label = "(5,7)" ]; 
+  a -> e [ label = "5" ]; 
+  a -> g [ label = "20" ]; 
+  c -> g [ label = "5" ]; 
+  c -> e [ label = "10" ]; 
+  c -> f [ label = "10" ]; 
+  c -> d [ label = "10" ]; 
+  b -> e [ label = "10" ]; 
+  b -> f [ label = "10" ]; 
 }
