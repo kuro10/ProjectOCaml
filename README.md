@@ -39,6 +39,10 @@ In order to use module Tfile, user has to create an input file with the imposed 
 - Source point with its supply capacity. By example, a source named "a" with supply capacity "25" is presented as : S a "25" 
 - Destination point with its demand capacity. By example, a destination named "d" with demand capcity "30" is presented as : D d "30"
 - Transport roads between points, as well as its maximal capacity. By example, if user is expecting a transport road between "a" and "d" with a maximal capacity of "20 products", it is presented as : C a d "20" 
+
+* `tfile.mli` & `tfile.ml` which define a module Tfile
+* `tfiletest.ml`, the main program of part 2
+
 ## Part III : Better project
 
 Enhance the medium project by taking into account other constraints - and implementing the max-flow min-cost algorithm.
