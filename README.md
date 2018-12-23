@@ -45,6 +45,16 @@ In this part :
 * `tfile.mli` & `tfile.ml` which define a module Tfile
 * `tfiletest.ml`, the main program of part 2
 
+To test the result : 
+
+`ocamlbuild tfiletest.byte`
+
+`./tfiletest.byte tab2 test2 graph2`
+
+`dot -Tpng graph2 > graph2.png` (transport graph before run algo)  
+
+`dot -Tpng test2 > test2.png`(result after run algo)
+
 ## Part III : Better project
 
 Enhance the medium project by taking into account other constraints - and implementing the max-flow min-cost algorithm.
