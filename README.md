@@ -27,7 +27,9 @@ To generate an image from a dot file, you can use:
 In this part, we have to understand and implement the Ford-Fulkerson algorithm (in the module `Ffalgo`), then test it on several examples and verify.
 
 `ocamlbuild ftest.byte`
+
 `./ftest.byte graph1 0 5 test1`
+
 `dot -Tpng test1 > test1.png`
 
 ## Part II : Medium project
