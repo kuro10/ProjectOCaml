@@ -40,6 +40,8 @@ In order to use module Tfile, user has to create an input file with the imposed 
 - Destination point with its demand capacity. By example, a destination named "d" with demand capcity "30" is presented as : D d "30"
 - Transport roads between points, as well as its maximal capacity. By example, if user is expecting a transport road between "a" and "d" with a maximal capacity of "20 products", it is presented as : C a d "20" 
 
+In this part : 
+
 * `tfile.mli` & `tfile.ml` which define a module Tfile
 * `tfiletest.ml`, the main program of part 2
 
