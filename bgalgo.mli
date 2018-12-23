@@ -24,4 +24,4 @@ val update_graph : label graph -> path -> label graph
 (*run_FF_algo g s d : apply the Busacker-Gowen algorithm for graph g
  *return a graph with max flow & min cost
  *and print the value of *)
-val run_BG_algo : label graph -> id -> id -> label graph
+val run_BG_algo : label graph -> id -> id -> int graph

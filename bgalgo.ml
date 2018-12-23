@@ -99,29 +99,54 @@ let update_graph g path =
 					update_rev_path ( update_arc g b a newlabel ) tl (*if it already exists, increase this value by adding flow_min*)
 	in update_rev_path (update_path g path) path
 
+
 (*-----------------------------------------------------------------------
-val run_BG_algo : label graph -> id -> id -> label graph
+val update_output : label graph -> (id * id * label) list -> int graph
+This function is used to update the output graph by given a deviation graph and a path
+------------------------------------------------------------------------*)
+
+let update_output g path = 
+	let flow_min = find_flow_min path in 
+	let rec update_path g path = match path with
+		| [] -> g
+		| (a,b,(flow,_))::tl -> 
+			match (find_arc g a b,find_arc g b a) with 
+				| (None,None) ->  update_path (add_arc g a b flow_min ) tl  (*if this arc does not exists, we add it into the graph *)
+				| (None,Some x) -> update_path (if x>flow_min then add_arc g b a (x-flow_min) else remove_arc g b a  ) tl
+				| (Some x,_) -> update_path ( update_arc g a b (x + flow_min) ) tl (*if it already exists, increase this value by adding flow_min  *)
+	in update_path g path	
+
+
+
+let initalize_output g =  
+	List.fold_left add_node empty_graph (find_nodes g) 
+
+
+(*-----------------------------------------------------------------------
+val run_BG_algo : label graph -> id -> id -> int graph
 This function helps to apply the Busacker-Gowen algorithm on the given graph
 Return a graph with max flow  & min cost
 Print the values of max flow & min cost
 ------------------------------------------------------------------------*)
 let run_BG_algo g s p =
+	let output = initalize_output g in
 	(*While it exists a path from s to p, continue algo 
 	 *cpt is used to count the number of loop *)
-	let rec loop g cpt cost debit= 
+	let rec loop g cpt cost debit output= 
 		if exist_path g s p then 
 			(*find a path and its flow min*)
 			let path = find_path_mincost g s p in
 			let flow_min = find_flow_min path in 
 			let newcost = cost + (find_cost path)*flow_min in
 			let newdebit =  debit + flow_min in 
-			(*print_path path; *)
+			print_path path; 
+			let newOutput = update_output output path in 
 			(*update the graph with this path *)
 			let newg = update_graph g path in 
 			(*Gfile.export (string_of_int cpt) newg;*)
-			loop newg (cpt+1) newcost newdebit
-		else (g,cost,debit) 
-	in let (result,mincost,maxdebit) = loop g 0 0 0 in
+			loop newg (cpt+1) newcost newdebit newOutput
+		else (output,cost,debit) 
+	in let (result,mincost,maxdebit) = loop g 0 0 0 output in
 	begin
 		Printf.printf "Result : min cost = %d &  max debit = %d\n" mincost maxdebit;
 		result 

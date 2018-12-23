@@ -26,10 +26,10 @@ let () =
     Printf.printf "Path from %s to %s : %b\n" _source _sink (Bgalgo.exist_path icgraph _source _sink);
     Printf.printf "Path with the min cost from %s to %s : \n" _source _sink ; 
   	Bgalgo.print_path (Bgalgo.find_path_mincost icgraph _source _sink);
-	*) 
-	GCostfile.export outfile cgraph;
-    GCostfile.export resfile (map (Bgalgo.run_BG_algo icgraph _source _sink) GCostfile.iTos);
-    
+    *) 
+    GCostfile.export outfile cgraph;
+    (*GCostfile.export resfile (map (Bgalgo.run_BG_algo icgraph _source _sink) GCostfile.iTos);*)
+    Gfile.export resfile (map (Bgalgo.run_BG_algo icgraph _source _sink) string_of_int );
 
   in
   ()

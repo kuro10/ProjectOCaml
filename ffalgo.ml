@@ -121,9 +121,10 @@ let update_output g path =
 	let rec update_path g path = match path with
 		| [] -> g
 		| (a,b,_)::tl -> 
-			match find_arc g a b with 
-				| None ->  update_path (add_arc g a b flow_min ) tl  (*if this arc does not exists, we add it into the graph *)
-				| Some x -> update_path ( update_arc g a b (x + flow_min) ) tl (*if it already exists, increase this value by adding flow_min  *)
+			match (find_arc g a b,find_arc g b a) with 
+				| (None,None) ->  update_path (add_arc g a b flow_min ) tl  (*if this arc does not exists, we add it into the graph *)
+				| (None,Some x) -> update_path (if x>flow_min then add_arc g b a (x-flow_min) else remove_arc g b a  ) tl
+				| (Some x,_) -> update_path ( update_arc g a b (x + flow_min) ) tl (*if it already exists, increase this value by adding flow_min  *)
 	in update_path g path	
 
 
