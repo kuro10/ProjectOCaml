@@ -53,7 +53,7 @@ To test the result :
 
 `dot -Tpng graph2 > graph2.png` (transport graph before run algo)  
 
-`dot -Tpng test2 > test2.png`(result after run algo)
+`dot -Tpng test2 > test2.png` (result after run algo)
 
 ## Part III : Better project
 
@@ -65,5 +65,14 @@ The project contains :
 * `gCostfile.mli` & `gCostfile.ml` which define a module `GCostfile`
 * `demoGC.ml`, the main program 
 
+To test the result : 
+
+`ocamlbuild demoGC.byte`
+
+`./demoGC.byte tab3 1 5 graph3 test3`
+
+`dot -Tpng graph3 > graph3.png`(before run algo)
+
+`dot -Tpng test3 > test3.png` (result after run algo)
 
 
