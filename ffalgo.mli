@@ -19,6 +19,10 @@ val print_path : path -> unit
 (*update_graph g path : update the graph when having the value flot_min got by a path *)
 val update_graph : int graph -> path -> int graph
 
+val update_output : int graph -> path -> int graph
+
+val initalize_output : int graph -> int graph
+
 (*run_FF_algo g s d : apply the Ford-Fulkerson algorithm for graph g
  *return a graph with flot max*)
 val run_FF_algo : int graph -> id -> id -> int graph

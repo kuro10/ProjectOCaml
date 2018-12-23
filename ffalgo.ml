@@ -82,7 +82,7 @@ This function prints the path, helps to check the results (path,flow_min)
 ------------------------------------------------------------------------*)
 let print_path path = 
 	Printf.printf "{ ";
-	List.iter (fun (id1,id2,label) -> Printf.printf "[%s,%s,%d] " id1 id2 label) (path);
+	List.iter (fun (id1,id2,label) -> Printf.printf "[from %s to %s,cap=%d] " id1 id2 label) (path);
 	Printf.printf " -> min flow = %d" (find_flow_min path);
 	Printf.printf " }\n"
 
@@ -104,11 +104,32 @@ let update_graph g path =
 	in 
 	let rec update_rev_path g path = match path with
 		| [] -> g
-		| (a,b,label)::tl -> 
+		| (a,b,_)::tl -> 
 			match find_arc g b a with 
 				| None ->  update_rev_path (add_arc g b a flow_min ) tl  (*if this arc does not exists, we add it into the graph *)
 				| Some x -> update_rev_path ( update_arc g b a (x + flow_min) ) tl (*if it already exists, increase this value by adding flow_min  *)
 	in update_rev_path (update_path g path) path
+
+
+(*-----------------------------------------------------------------------
+val update_output : int graph -> (id * id * int) list -> int graph
+This function is used to update the output graph by given a deviation graph and a path
+------------------------------------------------------------------------*)
+
+let update_output g path = 
+	let flow_min = find_flow_min path in 
+	let rec update_path g path = match path with
+		| [] -> g
+		| (a,b,_)::tl -> 
+			match find_arc g a b with 
+				| None ->  update_path (add_arc g a b flow_min ) tl  (*if this arc does not exists, we add it into the graph *)
+				| Some x -> update_path ( update_arc g a b (x + flow_min) ) tl (*if it already exists, increase this value by adding flow_min  *)
+	in update_path g path	
+
+
+
+let initalize_output g =  
+	List.fold_left add_node empty_graph (find_nodes g) 
 
 (*-----------------------------------------------------------------------
 val run_FF_algo : int graph -> id -> id -> int graph
@@ -116,21 +137,24 @@ This function helps to apply the Ford-Fulkerson algorithm on the given graph
 Return a graph with flow max
 ------------------------------------------------------------------------*)
 let run_FF_algo g s p =
+	let output = initalize_output g in  
 	(*While it exists a path from s to p, continue algo 
 	 *cpt is used to count the number of loop *)
-	let rec loop g cpt debit = 
+	let rec loop g cpt debit output = 
 		if exist_path g s p then 
 			(*find a path and its flow min*)
 			let path = find_path g s p in
 			let flow_min = find_flow_min path in 
 			let newdebit =  debit + flow_min in
-			(*print_path path; *)
-			(*update the graph with this path *)
+			print_path path;
+			(*Update the output with this path*)
+			let newOutput = update_output output path in
+			(*update the deviation graph with this path *)
 			let newg = update_graph g path in 
 			(*Gfile.export (string_of_int cpt) newg;*)
-			loop newg (cpt+1) newdebit  
-		else (g,debit) 
-	in let (result,maxdebit) = loop g 0 0 in 
+			loop newg (cpt+1) newdebit newOutput 
+		else (output,debit) 
+	in let (result,maxdebit) = loop g 0 0 output in 
 	begin
 		Printf.printf "Result : max debit = %d\n" maxdebit;
 		result 
