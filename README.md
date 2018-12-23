@@ -24,7 +24,7 @@ To generate an image from a dot file, you can use:
 
 ## Part I : Minimal acceptable project
 
-In this part, we have to understand and implement the Ford-Fulkerson algorithm (in the module `Ffalgo`), then test it on several examples and verify.
+In this part, we have to understand and implement the Ford-Fulkerson algorithm (in the module `Ffalgo`, which define a module Ffalgo), then test it on several examples and verify.
 
 `ocamlbuild ftest.byte`
 
@@ -40,7 +40,7 @@ In order to use module Tfile, user has to create an input file with the imposed 
 - Destination point with its demand capacity. By example, a destination named "d" with demand capcity "30" is presented as : D d "30"
 - Transport roads between points, as well as its maximal capacity. By example, if user is expecting a transport road between "a" and "d" with a maximal capacity of "20 products", it is presented as : C a d "20" 
 
-In this part : 
+In this part, the project contains : 
 
 * `tfile.mli` & `tfile.ml` which define a module Tfile
 * `tfiletest.ml`, the main program of part 2
@@ -58,6 +58,12 @@ To test the result :
 ## Part III : Better project
 
 Enhance the medium project by taking into account other constraints - and implementing the max-flow min-cost algorithm.
+
+The project contains : 
+
+* `bgalgo.mli` & `bgalgo.ml` which define a module `Bgalfo`
+* `gCostfile.mli` & `gCostfile.ml` which define a module `GCostfile`
+* `demoGC.ml`, the main program 
 
 
 
