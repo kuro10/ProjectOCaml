@@ -54,6 +54,7 @@ The project contains :
 
 In order to test the project's validity, we ran the programs on some examples and compared the results with those obtained by using other tools/programs, by calculating by hand and paper, etc. 
 
+
 I. Ford Fulkerson algorithm testing : please type on the command line the following commands   
 
 `ocamlbuild ftest.byte` to build the program.
@@ -61,6 +62,7 @@ I. Ford Fulkerson algorithm testing : please type on the command line the follow
 `./ftest.byte graph1 0 5 test1` where `graph1` is the text-formatted input graph and `test1` is the result graph. Here we choose `0` and `5` as source and sink. 
 
 `dot -Tpng test1 > test1.png` to visualize the text-formatted result graph by converting it into an image. 
+
 
 II. Transport case testing : please type the following commands :
 
@@ -71,6 +73,7 @@ II. Transport case testing : please type the following commands :
 `dot -Tpng graph2 > graph2.png` to visualize the starting graph
 
 `dot -Tpng test2 > test2.png` to visualize the result graph
+
 
 III. Max-flow Min-cost algorithm : to test the result, type : 
 
