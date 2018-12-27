@@ -6,7 +6,7 @@ type path = string
 (* Format of text files: lines of the form 
  *
  *  v id                   (node with the given identifier)
- *  e flow cost id1 id2    (arc with the given (string) flow & (string) cost. Goes from node id1 to node id2.)
+ *  e "flow,cost" id1 id2    (arc with the given (string) flow & (string) cost. Goes from node id1 to node id2.)
  *
  *)
 
