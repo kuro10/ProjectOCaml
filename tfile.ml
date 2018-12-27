@@ -12,6 +12,7 @@ type path = string
  *)
 
 (*-------------------------------------------------------------*)
+(*This auxiliary function read source nodes from a line and write in output file an arc between an "imaginary" main source and these sources*)
 let read_source line outfile =
   try Scanf.sscanf line "S %s \"%s@\"" (fun id label ->
   fprintf outfile "v %s\n" id;
@@ -21,6 +22,7 @@ let read_source line outfile =
     failwith "read_source"  
 	
 (*-------------------------------------------------------------*)
+(*This auxiliary function read destination nodes from a line and write in output file an arc between these destinations and an "imaginary" main destination*)
 let read_destination line outfile =
   try Scanf.sscanf line "D %s \"%s@\"" (fun id label ->
   fprintf outfile "v %s\n" id;
@@ -30,6 +32,7 @@ let read_destination line outfile =
     failwith "read_destination"  
  
 (*-------------------------------------------------------------*)
+(*This auxiliary function read transport roads between 2 points from a line and write in output file an arc between them*)
 let read_transport line outfile =
   try Scanf.sscanf line "C %s %s \"%s@\"" (fun id1 id2 label ->
   fprintf outfile "e \"%s\" %s %s\n" label id1 id2;)
@@ -37,7 +40,8 @@ let read_transport line outfile =
     Printf.printf "Cannot read line - %s:\n%s\n" (Printexc.to_string e) line ;
     failwith "read_transport"
 	
-(*-------------------------------------------------------------*)	
+(*-------------------------------------------------------------*)
+(*This function uses all auxiliary above to translate a transport problem into a text-fomatted graph file*)	
 let create_file infile outfile =
 
   let fx = open_in infile in
@@ -70,7 +74,8 @@ let create_file infile outfile =
   close_out ff;
   close_in fx;
   ()
-(*-------------------------------------------------------------*)	
+(*-------------------------------------------------------------*)
+(*This function export a formatted graph file so it can be converted into an image*)	
 let export path graph = 
   (* Open a write-file. *)
   let ff = open_out path in
@@ -82,6 +87,7 @@ let export path graph =
   fprintf ff "  node [shape = circle];\n";
 
   (* Write all arcs *)
+  (*The output graph must not contain 2 "imaginary" points : the "main" source and the "main" destination*)
   v_iter graph (fun id out -> if (id <> "S" && id <> "D") then List.iter (fun (id2, lbl) -> if (id2 <> "D" && id2 <> "S") then fprintf ff "  %s -> %s [ label = \"%s\" ]; \n" id id2 lbl) out) ;
 
   fprintf ff "}" ;
