@@ -42,7 +42,7 @@ In this part, the project contains :
 
 ## Part III : Project's enhancement with max-flow min-cost algorithm
 
-Advanced implementation of the basic Ford Fulkerson algorithm by considering other constraints - and implementing the max-flow min-cost algorithm.
+Advanced implementation of the basic Ford Fulkerson algorithm by considering other constraints - and implementing the max-flow min-cost algorithm (Busacker-Gowen Algorithm).
 
 The project contains : 
 
