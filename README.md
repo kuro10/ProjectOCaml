@@ -55,33 +55,33 @@ The project contains :
 In order to test the project's validity, we ran the programs on some examples and compared the results with those obtained by using other tools/programs, by calculating by hand and paper, etc. 
 
 
-I. Ford Fulkerson algorithm testing : please type on the command line the following commands   
+### I. Ford Fulkerson algorithm testing : please type on the command line the following commands   
 
-`ocamlbuild ftest.byte` to build the program.
+* `ocamlbuild ftest.byte` to build the program.
  
-`./ftest.byte graph1 0 5 test1` where `graph1` is the text-formatted input graph and `test1` is the result graph. Here we choose `0` and `5` as source and sink. 
+* `./ftest.byte graph1 0 5 test1` where `graph1` is the text-formatted input graph and `test1` is the result graph. Here we choose `0` and `5` as source and sink. 
 
-`dot -Tpng test1 > test1.png` to visualize the text-formatted result graph by converting it into an image. 
-
-
-II. Transport case testing : please type the following commands :
-
-`ocamlbuild tfiletest.byte` to build the program
-
-`./tfiletest.byte tab2 test2 graph2` where `tab2` is the transport's problem written in the correct format precised in part II, `test2` is the result graph and `graph2` is the input graph, obtained by translating the transport problem. 
-
-`dot -Tpng graph2 > graph2.png` to visualize the starting graph
-
-`dot -Tpng test2 > test2.png` to visualize the result graph
+* `dot -Tpng test1 > test1.png` to visualize the text-formatted result graph by converting it into an image. 
 
 
-III. Max-flow Min-cost algorithm : to test the result, type : 
+### II. Transport case testing : please type the following commands :
 
-`ocamlbuild demoGC.byte` to build the program
+* `ocamlbuild tfiletest.byte` to build the program
 
-`./demoGC.byte tab3 1 5 graph3 test3` with `tab3` as input file, `1` and `5` are source and sink, `graph3` as starting graph obtained by translating `tab3` into graph file, and `test3` as result graph. 
+* `./tfiletest.byte tab2 test2 graph2` where `tab2` is the transport's problem written in the correct format precised in part II, `test2` is the result graph and `graph2` is the input graph, obtained by translating the transport problem. 
 
-`dot -Tpng graph3 > graph3.png` to visualize the starting graph
+* `dot -Tpng graph2 > graph2.png` to visualize the starting graph
 
-`dot -Tpng test3 > test3.png` to visualize the result graph
+* `dot -Tpng test2 > test2.png` to visualize the result graph
+
+
+### III. Max-flow Min-cost algorithm : to test the result, type : 
+
+* `ocamlbuild demoGC.byte` to build the program
+
+* `./demoGC.byte tab3 1 5 graph3 test3` with `tab3` as input file, `1` and `5` are source and sink, `graph3` as starting graph obtained by translating `tab3` into graph file, and `test3` as result graph. 
+
+* `dot -Tpng graph3 > graph3.png` to visualize the starting graph
+
+* `dot -Tpng test3 > test3.png` to visualize the result graph
 
