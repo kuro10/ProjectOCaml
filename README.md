@@ -22,11 +22,11 @@ To generate an image from a dot file, type on command line:
 
  `dot -Tpng your-dot-file > some-output-file` (if the png format is unrecognized, try svg)
 
-## Part I : Ford-Fulkerson algorithm's implementation
+### Part I : Ford-Fulkerson algorithm's implementation
 
 In this part, we have to understand and implement the Ford-Fulkerson algorithm (in the module `Ffalgo`, which define a module Ffalgo), then test it on several examples and verify.
 
-## Part II : Involving in real life use case - Transport problem
+### Part II : Involving in real life use case - Transport problem
 
 Find an use-case of this algorithm and writes a program that solves the problem (reference : [max flow page](https://en.wikipedia.org/wiki/Maximum_flow_problem)). 
 In this part, we build a module named `Tfile` which allows user to "translate" a real life problem into a flow graph problem. 
@@ -40,7 +40,7 @@ In this part, the project contains :
 * `tfile.mli` & `tfile.ml` defining module `Tfile`.
 * `tfiletest.ml`, part II's main program.
 
-## Part III : Project's enhancement with max-flow min-cost algorithm
+### Part III : Project's enhancement with max-flow min-cost algorithm
 
 Advanced implementation of the basic Ford Fulkerson algorithm by considering other constraints - and implementing the max-flow min-cost algorithm (Busacker-Gowen Algorithm).
 
